@@ -32,7 +32,7 @@ async fn main() {
     let worker_iters = 10;
     for pool_size in [4, 8, 16] {
         for workers in [4, 16, 64, 256] {
-let pool = Pool::builder()
+            let pool = Pool::builder()
                 .max_size(pool_size)
                 .build(IntManager)
                 .await
