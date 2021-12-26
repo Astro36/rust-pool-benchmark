@@ -60,12 +60,12 @@ async fn main() {
             let q1 = elapsed[iters / 4];
             let q3 = elapsed[iters * 3 / 4];
             println!(
-                "bb8-v0.7 (pool={}, worker={}): {:?} (Q1={:?}, Q3={:?})",
+                "mobc-v0.7 (pool={}, worker={}): {:?} (Q1={:?}, Q3={:?})",
                 pool_size, workers, median, q1, q3,
             );
             writeln!(
                 file,
-                "bb8-v0.7,{},{},{},{},{}",
+                "mobc-v0.7,{},{},{},{},{}",
                 pool_size,
                 workers,
                 q1.as_nanos(),
