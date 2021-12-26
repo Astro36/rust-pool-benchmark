@@ -1,0 +1,12 @@
+[package]
+name = "mobc-v0_7-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mobc = "0.7.3"
+tokio = { version = "1.15.0", features = ["full"] }
+
+[[bench]]
+name = "bench_main"
+harness = false
