@@ -1,0 +1,11 @@
+[package]
+name = "r2d2-v0_8-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+r2d2 = "0.8.9"
+
+[[bench]]
+name = "bench_main"
+harness = false
