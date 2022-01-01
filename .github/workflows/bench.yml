@@ -22,7 +22,7 @@ jobs:
 
       - name: Generate benchmark report
         run: |
-          python visualize.py
+          python visualizer.py
           mkdir -p results
           mv benchmark* results
 
