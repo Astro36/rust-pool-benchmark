@@ -18,7 +18,6 @@ if __name__ == "__main__":
     mpl.rcParams['axes.prop_cycle'] = "cycler('color', ['#6768ab'])"
     mpl.rcParams['figure.autolayout'] = True
     mpl.rcParams['figure.titlesize'] = 16
-    mpl.rcParams['figure.titleweight'] = 700
     mpl.rcParams['font.family'] = 'monospace'
     mpl.rcParams['font.size'] = 9
     mpl.rcParams['svg.fonttype'] = 'none'
