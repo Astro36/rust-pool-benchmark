@@ -45,8 +45,12 @@ if __name__ == "__main__":
             fig.suptitle(f'Benchmark (pool={key[0]}, workers={key[1]})')
             bar1 = ax1.barh(labels, values)
             bar2 = ax2.barh(labels, values)
-            ax1.bar_label(bar1, labels=formatted_values, padding=-40, color='white')
-            ax2.bar_label(bar2, labels=formatted_values, padding=3)
+            label1 = ax1.bar_label(bar1, labels=formatted_values, padding=3, color='white')
+            label2 = ax2.bar_label(bar2, labels=formatted_values, padding=3)
+
+            for label in label1:
+                label.set_horizontalalignment('right')
+
             ax1.set_xlim(0, sorted_values[4] * 1.1)
             ax2.set_xlim(sorted_values[5] - margin, sorted_values[-1] + margin)
             ax1.spines.right.set_visible(False)
@@ -56,4 +60,5 @@ if __name__ == "__main__":
             ax1.xaxis.set_visible(False)
             ax2.xaxis.set_visible(False)
             ax2.yaxis.set_ticks_position('none')
+
             fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:02}).svg')
