@@ -1,4 +1,3 @@
-from argparse import ArgumentParser
 import csv
 from itertools import groupby
 import matplotlib.pyplot as plt
@@ -10,25 +9,25 @@ def benchmark_input(row):
 
 
 def format_time(x, pos):
-    if x >= 1e6:
-        return f'{x / 1e6:.1f}ms'
-    else:
-        return f'{x / 1e3:3.0f}µs'
+    return f'{int(x / 1e3):5,d}µs'
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument('path', help='benchmark result')
-    args = parser.parse_args()
-
-    plt.style.use('seaborn-notebook')
     mpl.rcParams['axes.edgecolor'] = '#676466'
     mpl.rcParams['axes.facecolor'] = '#f5f4f3'
     mpl.rcParams['axes.prop_cycle'] = "cycler('color', ['#6768ab'])"
     mpl.rcParams['figure.autolayout'] = True
+    mpl.rcParams['figure.titlesize'] = 16
+    mpl.rcParams['figure.titleweight'] = 700
+    mpl.rcParams['font.family'] = 'monospace'
+    mpl.rcParams['font.size'] = 9
+    mpl.rcParams['svg.fonttype'] = 'none'
+    mpl.rcParams['text.color'] = '#2d282e'
+    mpl.rcParams['ytick.labelcolor'] = '#2d282e'
+    mpl.rcParams['ytick.labelsize'] = 10
     mpl.rcParams['ytick.color'] = '#676466'
 
-    with open(args.path) as file:
+    with open('benchmark.txt') as file:
         reader = csv.reader(file)
         table = [[row[0], int(row[1]), int(row[2]), int(row[3]), int(row[4])] for row in reader]
         table.sort(key=benchmark_input)
@@ -47,8 +46,8 @@ if __name__ == "__main__":
             fig.suptitle(f'Benchmark (pool={key[0]}, workers={key[1]})')
             bar1 = ax1.barh(labels, values)
             bar2 = ax2.barh(labels, values)
-            ax1.bar_label(bar1, labels=formatted_values, padding=-35, color='white')
-            ax2.bar_label(bar2, labels=formatted_values, padding=3, color='#676466')
+            ax1.bar_label(bar1, labels=formatted_values, padding=-40, color='white')
+            ax2.bar_label(bar2, labels=formatted_values, padding=3)
             ax1.set_xlim(0, sorted_values[4] * 1.1)
             ax2.set_xlim(sorted_values[5] - margin, sorted_values[-1] + margin)
             ax1.spines.right.set_visible(False)
