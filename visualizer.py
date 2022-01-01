@@ -9,7 +9,7 @@ def benchmark_input(row):
 
 
 def format_time(x, pos):
-    return f'{int(x / 1e3):5,d}µs'
+    return f' {int(x / 1e3):,}µs '
 
 
 if __name__ == "__main__":
@@ -45,8 +45,8 @@ if __name__ == "__main__":
             fig.suptitle(f'Benchmark (pool={key[0]}, workers={key[1]})')
             bar1 = ax1.barh(labels, values)
             bar2 = ax2.barh(labels, values)
-            label1 = ax1.bar_label(bar1, labels=formatted_values, padding=3, color='white')
-            label2 = ax2.bar_label(bar2, labels=formatted_values, padding=3)
+            label1 = ax1.bar_label(bar1, labels=formatted_values, color='white')
+            label2 = ax2.bar_label(bar2, labels=formatted_values)
 
             for label in label1:
                 label.set_horizontalalignment('right')
@@ -61,4 +61,4 @@ if __name__ == "__main__":
             ax2.xaxis.set_visible(False)
             ax2.yaxis.set_ticks_position('none')
 
-            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:02}).svg')
+            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:03}).svg')
