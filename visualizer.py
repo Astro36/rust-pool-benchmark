@@ -20,7 +20,6 @@ if __name__ == "__main__":
     mpl.rcParams['figure.titlesize'] = 16
     mpl.rcParams['font.family'] = 'monospace'
     mpl.rcParams['font.size'] = 9
-    mpl.rcParams['svg.fonttype'] = 'none'
     mpl.rcParams['text.color'] = '#2d282e'
     mpl.rcParams['ytick.labelcolor'] = '#2d282e'
     mpl.rcParams['ytick.labelsize'] = 10
