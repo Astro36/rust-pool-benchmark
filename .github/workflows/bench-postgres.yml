@@ -41,7 +41,7 @@ jobs:
         run: |
           python visualizer.py
           mkdir -p results
-          rm results/benchmark*
+          rm -f results/benchmark*
           mv benchmark* results
 
       - name: Upload benchmark results
