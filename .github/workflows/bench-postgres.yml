@@ -1,0 +1,53 @@
+name: Benchmark for PostgreSQL
+
+on: workflow_dispatch
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: postgres
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Benchmark
+        run: find . -maxdepth 2 -name Cargo.toml -execdir cargo bench \;
+
+      - name: Collect benchmark results
+        run: find . -maxdepth 2 -name *result.txt -execdir cat {} \; > benchmark.txt
+
+      - name: Install Matplotlib
+        run: pip install matplotlib
+
+      - name: Generate benchmark report
+        run: |
+          python visualizer.py
+          mkdir -p results
+          rm results/benchmark*
+          mv benchmark* results
+
+      - name: Upload benchmark results
+        run: |
+          git config user.email "astro.psj@gmail.com"
+          git config user.name "Seungjae Park"
+          git add results
+          git commit -m "Update postgres benchmark result"
+          git push
