@@ -1,0 +1,12 @@
+[package]
+name = "sqlx-v0_5-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sqlx = { version = "0.5.10", features = ["runtime-tokio-rustls", "postgres"] }
+tokio = { version = "1.15.0", features = ["full"] }
+
+[[bench]]
+name = "bench_main"
+harness = false
