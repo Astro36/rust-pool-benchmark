@@ -1,0 +1,12 @@
+[package]
+name = "qp-v0_2_0-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+qp = { version = "0.2.0" }
+tokio = { version = "1.15.0", features = ["full"] }
+
+[[bench]]
+name = "bench_main"
+harness = false

@@ -50,8 +50,8 @@ if __name__ == "__main__":
             for label in label1:
                 label.set_horizontalalignment('right')
 
-            ax1.set_xlim(0, sorted_values[4] * 1.1)
-            ax2.set_xlim(sorted_values[5] - margin, sorted_values[-1] + margin)
+            ax1.set_xlim(0, sorted_values[5] * 1.1)
+            ax2.set_xlim(sorted_values[6] - margin, sorted_values[-1] + margin)
             ax1.spines.right.set_visible(False)
             ax2.spines.left.set_visible(False)
             ax1.xaxis.set_major_formatter(format_time)
@@ -60,4 +60,4 @@ if __name__ == "__main__":
             ax2.xaxis.set_visible(False)
             ax2.yaxis.set_ticks_position('none')
 
-            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:03}).svg')
+            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:03}).png')
