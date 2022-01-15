@@ -60,4 +60,4 @@ if __name__ == "__main__":
             ax2.xaxis.set_visible(False)
             ax2.yaxis.set_ticks_position('none')
 
-            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:03}).png')
+            fig.savefig(f'benchmark(p{key[0]:02}_w{key[1]:03}).svg')
