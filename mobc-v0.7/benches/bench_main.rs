@@ -38,6 +38,7 @@ async fn main() {
 
             let mut elapsed = Vec::with_capacity(iters);
             for _ in 0..iters {
+                let start = Instant::now();
                 let handles = (0..workers)
                     .map(|_| {
                         let pool = pool.clone();
@@ -49,7 +50,6 @@ async fn main() {
                         })
                     })
                     .collect::<Vec<_>>();
-                let start = Instant::now();
                 for handle in handles {
                     handle.await.unwrap();
                 }
