@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use bb8::{ManageConnection, Pool, PooledConnection};
+use deadpool::managed::{Manager, Pool, RecycleResult};
 use std::convert::Infallible;
 use std::fs::File;
 use std::io::Write;
@@ -8,38 +8,28 @@ use std::time::Instant;
 pub struct IntManager;
 
 #[async_trait]
-impl ManageConnection for IntManager {
-    type Connection = i32;
-    type Error = Infallible;
+impl Manager<i32, Infallible> for IntManager {
 
-    async fn connect(&self) -> Result<Self::Connection, Self::Error> {
+    async fn create(&self) -> Result<i32, Infallible> {
         Ok(0)
     }
 
-    async fn is_valid(&self, _: &mut PooledConnection<'_, Self>) -> Result<(), Self::Error> {
+    async fn recycle(&self, _: &mut i32) -> RecycleResult<Infallible> {
         Ok(())
-    }
-
-    fn has_broken(&self, _: &mut Self::Connection) -> bool {
-        false
     }
 }
 
 #[tokio::main]
 async fn main() {
-    let mut file = File::create("bb8-v0.7-result.txt").unwrap();
+    let mut file = File::create("deadpool-v0.7-result.txt").unwrap();
     let iters = 1_000;
     let worker_iters = 10;
     for pool_size in [4, 8, 16] {
         for workers in [4, 16, 64, 256] {
-            let pool = Pool::builder()
-                .max_size(pool_size)
-                .build(IntManager)
-                .await
-                .unwrap();
+            let pool = Pool::new(IntManager, pool_size);
 
             // reserve resources.
-            let mut v = Vec::with_capacity(pool_size as usize);
+            let mut v = Vec::with_capacity(pool_size);
             for _ in 0..pool_size {
                 v.push(pool.get().await.unwrap());
             }
@@ -69,12 +59,12 @@ async fn main() {
             let q1 = elapsed[iters / 4];
             let q3 = elapsed[iters * 3 / 4];
             println!(
-                "bb8-v0.7 (pool={}, worker={}): {:?} (Q1={:?}, Q3={:?})",
+                "deadpool-v0.7 (pool={}, worker={}): {:?} (Q1={:?}, Q3={:?})",
                 pool_size, workers, median, q1, q3,
             );
             writeln!(
                 file,
-                "bb8-v0.7,{},{},{},{},{}",
+                "deadpool-v0.7,{},{},{},{},{}",
                 pool_size,
                 workers,
                 q1.as_nanos(),

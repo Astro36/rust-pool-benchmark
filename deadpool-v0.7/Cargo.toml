@@ -1,0 +1,13 @@
+[package]
+name = "deadpool-v0_7-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+deadpool = "0.7.0"
+async-trait = "0.1.53"
+tokio = { version = "1.15.0", features = ["full"] }
+
+[[bench]]
+name = "bench_main"
+harness = false
